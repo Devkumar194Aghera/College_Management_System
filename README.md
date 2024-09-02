@@ -69,11 +69,3 @@ Additional features based on user needs and project scope, such as department pe
 
 Indexing will be used in the database to improve query performance and ensure that data retrieval operations are optimized for speed and efficiency.
 
-## Getting Started
-
-### Prerequisites
-
-- [Your programming language/platform] (e.g., Python, JavaScript, etc.)
-- [Database management system] (e.g., MySQL, PostgreSQL, etc.)
-- [Frameworks/Libraries] (e.g., React, Express, etc.)
-
