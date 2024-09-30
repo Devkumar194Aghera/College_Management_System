@@ -70,7 +70,11 @@ const LoginPage = () => {
       return <Navigate to="/sdashboard" replace state={{ data: userData }} />;
     if (role === "teacher")
       return <Navigate to="/tdashboard" replace state={{ data: userData }} />;
-    if (role === "admin")
+    if (role === "super_admin")
+      return <Navigate to="/adashboard" replace state={{ data: userData }} />;
+    if (role === "user_admin")
+      return <Navigate to="/adashboard" replace state={{ data: userData }} />;
+    if (role === "course_admin")
       return <Navigate to="/adashboard" replace state={{ data: userData }} />;
   }
 
@@ -90,7 +94,9 @@ const LoginPage = () => {
           >
             <MenuItem value="student">Student</MenuItem>
             <MenuItem value="teacher">Instructor</MenuItem>
-            <MenuItem value="admin">Administrator</MenuItem>
+            <MenuItem value="super_admin">Super Administrator</MenuItem>
+            <MenuItem value="user_admin">User Administrator</MenuItem>
+            <MenuItem value="course_admin">Course Administrator</MenuItem>
           </Select>
         </FormControl>
         <TextField
@@ -101,7 +107,11 @@ const LoginPage = () => {
           margin="normal"
           required
         />
-        {(role === "student" || role === "teacher" || role === "admin") && (
+        {(role === "student" ||
+          role === "teacher" ||
+          role === "super_admin" ||
+          role === "user_admin" ||
+          role === "course_admin") && (
           <TextField
             fullWidth
             label="Password"

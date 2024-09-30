@@ -47,6 +47,8 @@ const AdminDashboard = () => {
   // State for managing login status
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
+  console.log(data);
+
   useEffect(() => {
     const loggedInStatus = localStorage.getItem("isLoggedIn") === "true";
     setIsLoggedIn(loggedInStatus);
@@ -125,7 +127,14 @@ const AdminDashboard = () => {
                   transform: "scale(1.05)",
                 },
               }}
-              onClick={() => handleNavigate("/ManageCourse")}
+              onClick={() => {
+                if (data.ROLE === "course_admin" || data.ROLE === "super_admin")
+                  handleNavigate("/ManageCourse");
+                else
+                  window.alert(
+                    "The given Admin has no right to access the course settings"
+                  );
+              }}
             >
               Manage Course
             </Button>
@@ -146,7 +155,14 @@ const AdminDashboard = () => {
                   transform: "scale(1.05)",
                 },
               }}
-              onClick={() => handleNavigate("/ManageUser")}
+              onClick={() => {
+                if (data.ROLE === "user_admin" || data.ROLE === "super_admin")
+                  handleNavigate("/ManageUser");
+                else
+                  window.alert(
+                    "The given Admin has no right to access the user settings"
+                  );
+              }}
             >
               Manage User
             </Button>
