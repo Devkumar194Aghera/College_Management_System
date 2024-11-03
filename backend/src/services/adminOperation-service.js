@@ -18,6 +18,7 @@ class AdminOpr_Serivce {
       if (
         data.ROLE == "student" &&
         (!data.Course1ID ||
+          !data.fees ||
           !data.Course2ID ||
           !data.Course3ID ||
           !data.Course4ID ||
@@ -71,7 +72,7 @@ class AdminOpr_Serivce {
       if (!id) {
         throw "ID fields is missing please fill properly";
       }
-      const result = this.adminOpr_Repository.deleteUser(id, data);
+      const result = this.adminOpr_Repository.deleteUser(id);
       return result;
     } catch (error) {
       console.error("Error in service layer: ", error);
@@ -105,6 +106,34 @@ class AdminOpr_Serivce {
         throw "ID fields is missing please fill properly";
       }
       const result = this.adminOpr_Repository.deleteCourse(id);
+      return result;
+    } catch (error) {
+      console.error("Error in service layer: ", error);
+      throw error;
+    }
+  }
+  async feesStatus() {
+    try {
+      const result = this.adminOpr_Repository.feesStatus();
+      return result;
+    } catch (error) {
+      console.error("Error in service layer: ", error);
+      throw error;
+    }
+  }
+  async getfeesStatus() {
+    try {
+      const result = this.adminOpr_Repository.getfeesStatus();
+      return result;
+    } catch (error) {
+      console.error("Error in service layer: ", error);
+      throw error;
+    }
+  }
+
+  async setfeesStatus(id, feesStatus) {
+    try {
+      const result = this.adminOpr_Repository.setfeesStatus(id, feesStatus);
       return result;
     } catch (error) {
       console.error("Error in service layer: ", error);

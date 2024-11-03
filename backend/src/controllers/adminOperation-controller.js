@@ -132,6 +132,69 @@ const deleteCourse = async (req, res) => {
   }
 };
 
+const feesStatus = async (req, res) => {
+  try {
+    const response = await adminOpr_Serivce.feesStatus();
+    return res.status(200).json({
+      data: response,
+      success: true,
+      message: "Successfully fetch the data",
+      error: {},
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(200).json({
+      data: {},
+      success: false,
+      message: "Error while fetching the data",
+      error: error,
+    });
+  }
+};
+
+const getfeesStatus = async (req, res) => {
+  try {
+    const response = await adminOpr_Serivce.getfeesStatus();
+    return res.status(200).json({
+      data: response,
+      success: true,
+      message: "Successfully fetch the data",
+      error: {},
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Error while fetching the data",
+      error: error,
+    });
+  }
+};
+
+const setfeesStatus = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const feeStatus = req.body.Fees_Paid;
+
+    const response = await adminOpr_Serivce.setfeesStatus(id, feeStatus);
+    return res.status(200).json({
+      data: response,
+      success: true,
+      message: "Successfully updating the fees data",
+      error: {},
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      data: {},
+      success: false,
+      message: "Error updating the fees data",
+      error: error,
+    });
+  }
+};
+
 module.exports = {
   addUser,
   getUser,
@@ -139,4 +202,7 @@ module.exports = {
   deleteUser,
   addCourse,
   deleteCourse,
+  feesStatus,
+  getfeesStatus,
+  setfeesStatus,
 };

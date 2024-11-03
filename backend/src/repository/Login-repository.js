@@ -2,7 +2,7 @@ const makeConnection = require("../utils/connectToDB");
 
 async function validateLogin(data) {
   try {
-    console.log(data);ō
+    console.log(data);
     const db = makeConnection();
     const [results] = await db.query(
       "SELECT * FROM users WHERE email = ? AND password = ? AND ROLE = ?",

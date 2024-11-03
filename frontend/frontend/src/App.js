@@ -1,9 +1,8 @@
-import logo from './logo.svg';
-import './App.css';
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoutes";
 import LoginPage from "./components/LoginPage";
-import NotFoundPage from "./components/PageNotFound404"; // Optional, for handling 404 errors
+import NotFoundPage from "./components/PageNotFound404";
 import UpdateForm from "./components/UpdatePersonalDetails";
 import UpdateProfile from "./components/UpdateProfile";
 import PerformancePage from "./components/PerformancePage";
@@ -17,29 +16,71 @@ import AdminUser from "./components/AdminUser";
 import AdminCourse from "./components/AdminCourse";
 import StudentPerformance from "./components/StudentPerformancePage";
 import UpdateStudentMarks from "./components/UpdateStudentMarks";
+import StudentFees from "./components/StudentFees";
+import Home from "./pages/home";
+import ContactUs from "./pages/contactus";
+
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/updateDetails" element={<UpdateForm />} />
         <Route path="/changeStudent" element={<CRUDonStudent />} />
         <Route path="/performance" element={<PerformancePage />} />
-        <Route path="/sdashboard" element={<StudentDashboard />} />
-        <Route path="/tdashboard" element={<TeacherDashboard />} />
-        <Route path="/adashboard" element={<AdminDashboard />} />
         <Route path="/addStudent" element={<AddStudentForm />} />
         <Route path="/ManageUser" element={<AdminUser />} />
         <Route path="/ManageCourse" element={<AdminCourse />} />
         <Route path="/profile" element={<UpdateProfile />} />
-        <Route path="/courses" element={<TeacherCourses />} />
         <Route path="/StudentPerformance" element={<StudentPerformance />} />
         <Route path="/UpdateMarks" element={<UpdateStudentMarks />} />
-        <Route path="*" element={<NotFoundPage />} />{" "}
+        <Route path="/StudentFees" element={<StudentFees />} />
+        <Route path="/contact" element={<ContactUs />} />
+
+        {/* Role-protected routes */}
+        <Route
+          path="/sdashboard"
+          element={
+            <ProtectedRoute
+              element={<StudentDashboard />}
+              requiredRole="student"
+            />
+          }
+        />
+        <Route
+          path="/tdashboard"
+          element={
+            <ProtectedRoute
+              element={<TeacherDashboard />}
+              requiredRole="teacher"
+            />
+          }
+        />
+        <Route
+          path="/adashboard"
+          element={
+            <ProtectedRoute
+              element={<AdminDashboard />}
+              requiredRole="super_admin"
+            />
+          }
+        />
+        <Route
+          path="/courses"
+          element={
+            <ProtectedRoute
+              element={<TeacherCourses />}
+              requiredRole="teacher"
+            />
+          }
+        />
+
+        {/* Catch-all route for 404 */}
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );
 };
-
 
 export default App;

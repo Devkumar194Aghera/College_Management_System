@@ -56,7 +56,8 @@ const LoginPage = () => {
       if (response.data.success) {
         setUserData(response.data.data[0]);
         setIsLoggedIn(true);
-        localStorage.setItem("isLoggedIn", "true"); // Set isLoggedIn to true in localStorage
+        localStorage.setItem("isLoggedIn", "true"); // Set isLoggedIn to true
+        localStorage.setItem("userRole", role); // Store the user role in localStorage
       }
     } catch (error) {
       console.error("Error occurred during login:", error);
@@ -72,10 +73,10 @@ const LoginPage = () => {
       return <Navigate to="/tdashboard" replace state={{ data: userData }} />;
     if (role === "super_admin")
       return <Navigate to="/adashboard" replace state={{ data: userData }} />;
-    if (role === "user_admin")
-      return <Navigate to="/adashboard" replace state={{ data: userData }} />;
-    if (role === "course_admin")
-      return <Navigate to="/adashboard" replace state={{ data: userData }} />;
+    // if (role === "user_admin")
+    //   return <Navigate to="/adashboard" replace state={{ data: userData }} />;
+    // if (role === "course_admin")
+    //   return <Navigate to="/adashboard" replace state={{ data: userData }} />;
   }
 
   return (
@@ -94,9 +95,9 @@ const LoginPage = () => {
           >
             <MenuItem value="student">Student</MenuItem>
             <MenuItem value="teacher">Instructor</MenuItem>
-            <MenuItem value="super_admin">Super Administrator</MenuItem>
-            <MenuItem value="user_admin">User Administrator</MenuItem>
-            <MenuItem value="course_admin">Course Administrator</MenuItem>
+            <MenuItem value="super_admin">Administrator</MenuItem>
+            {/* <MenuItem value="user_admin">User Administrator</MenuItem>
+            <MenuItem value="course_admin">Course Administrator</MenuItem> */}
           </Select>
         </FormControl>
         <TextField
@@ -109,9 +110,9 @@ const LoginPage = () => {
         />
         {(role === "student" ||
           role === "teacher" ||
-          role === "super_admin" ||
+          role === "super_admin") /*||
           role === "user_admin" ||
-          role === "course_admin") && (
+          role === "course_admin"*/ && (
           <TextField
             fullWidth
             label="Password"

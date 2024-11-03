@@ -34,7 +34,7 @@ class AdminOpr_Repository {
           let [lastID] = await db.query(lastIDQuery);
           lastID = lastID[0].Lastid;
           const rollNo = "S00" + lastID;
-          const addStudentQuery = `insert into student (ID,Roll_Number,DEPARTMENTID,Course1ID,Course2ID,Course3ID,Course4ID,Course5ID) values (?,?,?,?,?,?,?,?)`;
+          const addStudentQuery = `insert into student (ID,Roll_Number,DEPARTMENTID,Course1ID,Course2ID,Course3ID,Course4ID,Course5ID,Fees_Paid) values (?,?,?,?,?,?,?,?,?)`;
           const [addStudent] = await db.query(addStudentQuery, [
             lastID,
             rollNo,
@@ -44,6 +44,7 @@ class AdminOpr_Repository {
             data.courseIds[2],
             data.courseIds[3],
             data.courseIds[4],
+            data.fees,
           ]);
 
           const addPerformanceQuery =
@@ -177,6 +178,70 @@ class AdminOpr_Repository {
       else if (DeleteCourse.affectedRows == 0)
         throw "No such Course with this ID exists";
       else throw "Error while deleting the Course";
+    } catch (error) {
+      console.error("Error in repository layer: ", error);
+      throw error;
+    }
+  }
+  async feesStatus() {
+    try {
+      const db = makeConnection();
+      let feesStatus_Query =
+        "select count(id) from student where Fees_Paid='YES' ";
+      let [result] = await db.query(feesStatus_Query);
+
+      const counter = "count(id)";
+
+      const paidCount = result[0][counter];
+
+      feesStatus_Query = "select count(id) from student where Fees_Paid='NO' ";
+      [result] = await db.query(feesStatus_Query);
+
+      const notPaidCount = result[0][counter];
+
+      console.log(paidCount);
+      console.log(notPaidCount);
+      if (paidCount != undefined && notPaidCount != undefined) {
+        const response = [paidCount, notPaidCount];
+        return response;
+      } else {
+        throw "Error retrieving count of students who paid fees.";
+      }
+    } catch (error) {
+      console.error("Error in repository layer: ", error);
+      throw error;
+    }
+  }
+  async getfeesStatus() {
+    try {
+      const db = makeConnection();
+      let getfeesStatus_Query = "select  id , Fees_Paid from student";
+      let [result] = await db.query(getfeesStatus_Query);
+
+      console.log(result);
+
+      return result;
+    } catch (error) {
+      console.error("Error in repository layer: ", error);
+      throw error;
+    }
+  }
+  async setfeesStatus(id, feeStatus) {
+    try {
+      id = parseInt(id);
+      const db = makeConnection();
+
+      console.log(id, feeStatus);
+      let getfeesStatus_Query = "update student set Fees_Paid = ? where id = ?";
+      let [result] = await db.query(getfeesStatus_Query,[feeStatus,id]);
+
+      console.log(result);
+
+      if (result.affectedRows == 1)       return result;
+      else if (DeleteCourse.affectedRows == 0)
+        throw "No student with this ID exists";
+      else throw "Error while updating the Fees";
+
     } catch (error) {
       console.error("Error in repository layer: ", error);
       throw error;
