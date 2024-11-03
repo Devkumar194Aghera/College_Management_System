@@ -9,6 +9,11 @@ import {
   Stack,
   Typography,
   MenuItem,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
   responsiveFontSizes,
 } from "@mui/material";
 import { dark } from "@mui/material/styles/createPalette";
@@ -21,12 +26,14 @@ const AddUser = () => {
   const [password, setPassword] = useState("");
   const [departmentId, setDepartmentId] = useState("");
   const [courseIds, setCourseIds] = useState(Array(5).fill(""));
+  const [fees, setFees] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
   useEffect(() => {
     if (role === "student") {
       setDepartmentId("");
+      setFees("");
       setCourseIds(Array(5).fill(""));
     }
   }, [role]);
@@ -45,7 +52,7 @@ const AddUser = () => {
     }
     if (
       role === "student" &&
-      (departmentId === "" || courseIds.some((id) => id === ""))
+      (fees === "" || departmentId === "" || courseIds.some((id) => id === ""))
     ) {
       setSnackbarMessage("Please fill out all student fields.");
       setOpenSnackbar(true);
@@ -68,6 +75,7 @@ const AddUser = () => {
       }
       Object.assign(Userdata, {
         departmentId: parseInt(departmentId, 10),
+        fees: fees,
         courseIds: courseIds,
       });
     }
@@ -144,6 +152,23 @@ const AddUser = () => {
         />
         {role === "student" && (
           <>
+            <div>
+              <FormControl component="fieldset">
+                <FormLabel component="legend">Fees Paid</FormLabel>
+                <RadioGroup
+                  row
+                  value={fees}
+                  onChange={(e) => setFees(e.target.value)}
+                >
+                  <FormControlLabel
+                    value="YES"
+                    control={<Radio />}
+                    label="YES"
+                  />
+                  <FormControlLabel value="NO" control={<Radio />} label="NO" />
+                </RadioGroup>
+              </FormControl>
+            </div>
             <TextField
               fullWidth
               label="Department ID"

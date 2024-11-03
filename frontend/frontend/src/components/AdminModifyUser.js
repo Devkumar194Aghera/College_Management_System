@@ -96,7 +96,7 @@ const ModifyUser = () => {
   return (
     <Box sx={{ maxWidth: 600, mx: "auto", mt: 4 }}>
       <Typography variant="h5" gutterBottom>
-        Modify User
+        View User
       </Typography>
       <Stack spacing={3} component={Paper} sx={{ p: 3 }}>
         <TextField

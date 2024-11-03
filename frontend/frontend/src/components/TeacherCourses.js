@@ -1,43 +1,55 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
 import "./PerformancePage.css"; // Import the CSS file
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function getData(data) {
   console.log("data");
-  data = data.data;
   console.log(data);
 
-  let length = data.length;
   const courseData = [];
-  for (let i = 0; i < length; i++) {
+  for (let i = 0; i < data.length; i++) {
     courseData.push(data[i].CourseName);
   }
 
-  //   const courseData = [
-  //     { [c1Name]: performance[0].Course1_Marks },
-  //     { [c2Name]: performance[0].Course2_Marks },
-  //     { [c3Name]: performance[0].Course3_Marks },
-  //     { [c4Name]: performance[0].Course4_Marks },
-  //     { [c5Name]: performance[0].Course5_Marks },
-  //   ];
-
-  //   const departments = [
-  //     { name: Object.keys(data[0]) },
-  //     { name: Object.keys(data[1]) },
-  //     { name: Object.keys(data[2]) },
-  //     { name: Object.keys(data[3]) },
-  //     { name: Object.keys(data[4]) },
-  //   ];
   return courseData;
 }
 
 const TeacherCourses = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const data = location.state?.data;
+  let data = location.state?.data;
+  const [departments, setDepartments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  console.log(data);
-  const departments = getData(data);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post(
+          "http://localhost:3001/iiitn/course",
+          data
+        );
+        const result = response.data.data;
+        // console.log(result);
+
+        if (result) {
+          // Convert data array into departments with keys and values
+          setDepartments(getData(result));
+        }
+      } catch (error) {
+        setError("Failed to load performance data");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
+
   return (
     <div className="table-container">
       <h2 className="table-heading">Your Courses 👩‍🏫👨‍🏫</h2>

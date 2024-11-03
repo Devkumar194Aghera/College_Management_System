@@ -1,6 +1,7 @@
 import AddUser from "./AdminAddUser";
 import ModifyUser from "./AdminModifyUser";
 import DeleteUser from "./AdminDeleteUser";
+import FeeStatus from "./AdminFeesStatus";
 import React, { useState } from "react";
 import {
   Box,
@@ -22,6 +23,8 @@ const AdminStudentManager = () => {
         return <ModifyUser />;
       case "delete":
         return <DeleteUser />;
+      case "fees_details":
+        return <FeeStatus />;
       default:
         return <Typography>Select an action to get started.</Typography>;
     }
@@ -42,6 +45,9 @@ const AdminStudentManager = () => {
           </Button>
           <Button variant="contained" onClick={() => setAction("delete")}>
             Delete User
+          </Button>
+          <Button variant="contained" onClick={() => setAction("fees_details")}>
+            Fees Details
           </Button>
         </Stack>
         <Box>{renderComponent()}</Box>

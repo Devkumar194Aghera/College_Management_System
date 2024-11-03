@@ -21,5 +21,9 @@ router.get("/adminViewUser/:id", AdminAddUser.getUser);
 router.patch("/adminUpdateUser/:id", AdminAddUser.updateUser);
 router.delete("/adminDeleteUser/:id", AdminAddUser.deleteUser);
 router.delete("/adminDeleteCourse/:id", AdminAddUser.deleteCourse);
+router.get("/adminFeesStatus", AdminAddUser.feesStatus);
+router.get("/studentFeesList", AdminAddUser.getfeesStatus);
+router.put("/updateStudentFeeStatus/:id", AdminAddUser.setfeesStatus);
+
 
 module.exports = router;
