@@ -17,15 +17,12 @@ import AdminCourse from "./components/AdminCourse";
 import StudentPerformance from "./components/StudentPerformancePage";
 import UpdateStudentMarks from "./components/UpdateStudentMarks";
 import StudentFees from "./components/StudentFees";
-import Home from "./pages/home";
-import ContactUs from "./pages/contactus";
 
 const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<LoginPage />} />
         <Route path="/updateDetails" element={<UpdateForm />} />
         <Route path="/changeStudent" element={<CRUDonStudent />} />
         <Route path="/performance" element={<PerformancePage />} />
@@ -36,7 +33,6 @@ const App = () => {
         <Route path="/StudentPerformance" element={<StudentPerformance />} />
         <Route path="/UpdateMarks" element={<UpdateStudentMarks />} />
         <Route path="/StudentFees" element={<StudentFees />} />
-        <Route path="/contact" element={<ContactUs />} />
 
         {/* Role-protected routes */}
         <Route
