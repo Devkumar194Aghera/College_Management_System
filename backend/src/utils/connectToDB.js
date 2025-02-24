@@ -1,13 +1,19 @@
 const mysql = require("mysql2");
-const { DB_PASS } = require("../config/serverConfig");
+const {
+  DB_PASS,
+  DB_HOST,
+  DB_USER,
+  DB_PORT,
+} = require("../config/serverConfig");
 
 const makeConnection = () => {
   try {
     const connection = mysql.createPool({
-      host: "localhost",
-      user: "root",
+      host: DB_HOST,
+      user: DB_USER,
       password: DB_PASS,
-      database: "school_management_db",
+      port: DB_PORT,
+      database: "college_management_db",
       waitForConnections: true,
     });
     console.log("connected");
