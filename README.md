@@ -1,5 +1,7 @@
 # College Management System
 
+Live Project Link : https://college-management-frontend-1fu5jw93p-dev-agheras-projects.vercel.app/
+
 ## Overview
 
 This project is a College Management System designed to manage and simplify various activities within a college. The system enables efficient management of departments, courses, instructors, and students, providing a comprehensive solution for handling data manipulation, performance tracking, exam scheduling, and more. The project includes both front-end and back-end modules to create a user-friendly interface for various user roles.
